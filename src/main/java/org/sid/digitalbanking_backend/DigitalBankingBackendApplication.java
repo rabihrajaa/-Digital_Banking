@@ -24,7 +24,7 @@ public class DigitalBankingBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(DigitalBankingBackendApplication.class, args);
     }
-    @Bean
+    //@Bean
     CommandLineRunner start(CustomerRepository customerRepository,
                             BankAccountRepository bankAccountRepository,
                             AccountOperationRepository accountOperationRepository

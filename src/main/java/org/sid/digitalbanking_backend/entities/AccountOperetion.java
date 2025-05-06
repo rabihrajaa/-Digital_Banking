@@ -20,4 +20,5 @@ public class AccountOperetion {
     private OperationType type;
     @ManyToOne
     private BankAccount bankAccount;
+    private String description;
 }
