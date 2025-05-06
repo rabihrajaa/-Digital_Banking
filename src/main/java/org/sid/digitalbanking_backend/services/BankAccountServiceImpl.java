@@ -2,11 +2,13 @@ package org.sid.digitalbanking_backend.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.sid.digitalbanking_backend.dtos.CustomerDTO;
 import org.sid.digitalbanking_backend.entities.*;
 import org.sid.digitalbanking_backend.enums.OperationType;
 import org.sid.digitalbanking_backend.exceptions.BankAccountNotFoundException;
 import org.sid.digitalbanking_backend.exceptions.BankAccountNotSufficientException;
 import org.sid.digitalbanking_backend.exceptions.CustomerNotFoundException;
+import org.sid.digitalbanking_backend.mappers.BankAccountMapperImpl;
 import org.sid.digitalbanking_backend.repositories.AccountOperationRepository;
 import org.sid.digitalbanking_backend.repositories.BankAccountRepository;
 import org.sid.digitalbanking_backend.repositories.CustomerRepository;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,7 +29,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private BankAccountRepository bankAccountRepository;
     private CustomerRepository customerRepository;
     private AccountOperationRepository accountOperationRepository;
-
+    private BankAccountMapperImpl bankAccountMapper;
 
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -73,8 +76,18 @@ public class BankAccountServiceImpl implements BankAccountService {
 
 
     @Override
-    public List<Customer> listCustomers() {
-        return (List<Customer>) customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers=  (List<Customer>) customerRepository.findAll();
+        List<CustomerDTO> collect = customers.stream()
+                .map(customer -> bankAccountMapper.fromCustomerToCustomerDTO(customer))
+                .collect(Collectors.toList());
+        /*
+        List<CustomerDTO> customerD TOS=new ArrayList<>();
+        for (Customer customer:customers) {
+        Customer DTO customerDTO=dtoMapper.fromCustomer (customer);
+        customerDTOS.add(customerDTO);
+        */
+        return collect;
     }
 
     @Override

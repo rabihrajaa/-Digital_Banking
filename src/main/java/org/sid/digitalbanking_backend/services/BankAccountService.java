@@ -1,5 +1,6 @@
 package org.sid.digitalbanking_backend.services;
 
+import org.sid.digitalbanking_backend.dtos.CustomerDTO;
 import org.sid.digitalbanking_backend.entities.BankAccount;
 import org.sid.digitalbanking_backend.entities.CurrentAccount;
 import org.sid.digitalbanking_backend.entities.Customer;
@@ -14,7 +15,7 @@ public interface BankAccountService {
     public Customer saveCustomer(Customer customer);
     CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
-    List<Customer> listCustomers();
+    List<CustomerDTO> listCustomers();
     BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
     void debit(String accountId, double amount,String description) throws BankAccountNotFoundException, BankAccountNotSufficientException;
     void credit(String accountId, double amount,String description) throws BankAccountNotFoundException;
