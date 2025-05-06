@@ -5,6 +5,7 @@ import org.sid.digitalbanking_backend.entities.CurrentAccount;
 import org.sid.digitalbanking_backend.entities.Customer;
 import org.sid.digitalbanking_backend.entities.SavingAccount;
 import org.sid.digitalbanking_backend.exceptions.BankAccountNotFoundException;
+import org.sid.digitalbanking_backend.exceptions.BankAccountNotSufficientException;
 import org.sid.digitalbanking_backend.exceptions.CustomerNotFoundException;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public interface BankAccountService {
     SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<Customer> listCustomers();
     BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
-    void debit(String accountId, double amount,String description);
-    void credit(String accountId, double amount,String description);
-    void transfer(String fromAccountId, String accountIdSource,String accountIdDescription, double amount);
+    void debit(String accountId, double amount,String description) throws BankAccountNotFoundException, BankAccountNotSufficientException;
+    void credit(String accountId, double amount,String description) throws BankAccountNotFoundException;
+    void transfer(String fromAccountId, String accountIdSource,String accountIdDescription, double amount) throws BankAccountNotFoundException, BankAccountNotSufficientException;
 
 }
