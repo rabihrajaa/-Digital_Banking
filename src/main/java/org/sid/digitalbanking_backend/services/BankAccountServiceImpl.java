@@ -10,8 +10,6 @@ import org.sid.digitalbanking_backend.exceptions.CustomerNotFoundException;
 import org.sid.digitalbanking_backend.repositories.AccountOperationRepository;
 import org.sid.digitalbanking_backend.repositories.BankAccountRepository;
 import org.sid.digitalbanking_backend.repositories.CustomerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,5 +117,9 @@ public class BankAccountServiceImpl implements BankAccountService {
     public void transfer(String fromAccountId, String accountIdSource, String accountIdDescription, double amount) throws BankAccountNotFoundException, BankAccountNotSufficientException {
         debit(accountIdSource,amount,"Transfer to "+accountIdDescription);
         credit(accountIdDescription,amount,"Transfer from "+accountIdDescription);
+    }
+    @Override
+    public List<BankAccount> bankAccountList(){
+        return (List<BankAccount>) bankAccountRepository.findAll();
     }
 }
