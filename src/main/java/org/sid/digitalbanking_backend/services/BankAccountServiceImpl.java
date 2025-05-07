@@ -150,6 +150,20 @@ public class BankAccountServiceImpl implements BankAccountService {
         return bankAccountMapper.fromCustomerToCustomerDTO(customer);
     }
 
+    @Override
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
+        log.info("Saving new customer");
+        log.info("customerDTO reçu: {}", customerDTO);
+        Customer customer=bankAccountMapper.fromCustomerDTOToCustomer(customerDTO);
+        log.info("customer: {}", customer);
+        Customer savedCustomer = customerRepository.save(customer);
+        log.info("customerDTO : {}", bankAccountMapper.fromCustomerToCustomerDTO(savedCustomer));
+        return bankAccountMapper.fromCustomerToCustomerDTO(savedCustomer);
+    }
 
+    @Override
+    public void deleteCustomer(Long customerId){
+        customerRepository.deleteById(customerId);
+    }
 
 }
