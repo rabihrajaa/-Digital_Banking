@@ -2,10 +2,7 @@ package org.sid.digitalbanking_backend.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.sid.digitalbanking_backend.dtos.BankAccountDTO;
-import org.sid.digitalbanking_backend.dtos.CurrentBankAccountDTO;
-import org.sid.digitalbanking_backend.dtos.CustomerDTO;
-import org.sid.digitalbanking_backend.dtos.SavingBankAccountDTO;
+import org.sid.digitalbanking_backend.dtos.*;
 import org.sid.digitalbanking_backend.entities.*;
 import org.sid.digitalbanking_backend.enums.OperationType;
 import org.sid.digitalbanking_backend.exceptions.BankAccountNotFoundException;
@@ -183,6 +180,12 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public void deleteCustomer(Long customerId){
         customerRepository.deleteById(customerId);
+    }
+
+    @Override
+    public List<AccountOperetionDTO> accountHistory(String accountId){
+        List<AccountOperetion> accountOperations = accountOperationRepository.findByBankAccountId(accountId);
+        return accountOperations.stream().map(op->bankAccountMapper.fromAccountOperation(op)).collect(Collectors.toList());
     }
 
 }

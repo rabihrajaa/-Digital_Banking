@@ -1,9 +1,6 @@
 package org.sid.digitalbanking_backend.services;
 
-import org.sid.digitalbanking_backend.dtos.BankAccountDTO;
-import org.sid.digitalbanking_backend.dtos.CurrentBankAccountDTO;
-import org.sid.digitalbanking_backend.dtos.CustomerDTO;
-import org.sid.digitalbanking_backend.dtos.SavingBankAccountDTO;
+import org.sid.digitalbanking_backend.dtos.*;
 import org.sid.digitalbanking_backend.entities.BankAccount;
 import org.sid.digitalbanking_backend.entities.CurrentAccount;
 import org.sid.digitalbanking_backend.entities.Customer;
@@ -31,4 +28,6 @@ public interface BankAccountService {
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long customerId);
+
+    List<AccountOperetionDTO> accountHistory(String accountId);
 }

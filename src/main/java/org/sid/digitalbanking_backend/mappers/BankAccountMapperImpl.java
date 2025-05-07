@@ -1,8 +1,10 @@
 package org.sid.digitalbanking_backend.mappers;
 
+import org.sid.digitalbanking_backend.dtos.AccountOperetionDTO;
 import org.sid.digitalbanking_backend.dtos.CurrentBankAccountDTO;
 import org.sid.digitalbanking_backend.dtos.CustomerDTO;
 import org.sid.digitalbanking_backend.dtos.SavingBankAccountDTO;
+import org.sid.digitalbanking_backend.entities.AccountOperetion;
 import org.sid.digitalbanking_backend.entities.CurrentAccount;
 import org.sid.digitalbanking_backend.entities.Customer;
 import org.sid.digitalbanking_backend.entities.SavingAccount;
@@ -30,6 +32,7 @@ public class BankAccountMapperImpl {
         SavingBankAccountDTO savingBankAccountDTO=new SavingBankAccountDTO();
         BeanUtils.copyProperties (savingAccount, savingBankAccountDTO);
         savingBankAccountDTO.setCustomerDTO(fromCustomerToCustomerDTO(savingAccount.getCustomer()));
+        savingBankAccountDTO.setType(savingAccount.getClass().getSimpleName());
         return savingBankAccountDTO;
     }
 
@@ -44,6 +47,7 @@ public class BankAccountMapperImpl {
         CurrentBankAccountDTO currentBankAccountDTO=new CurrentBankAccountDTO();
         BeanUtils.copyProperties (currentAccount, currentBankAccountDTO);
         currentBankAccountDTO.setCustomerDTO(fromCustomerToCustomerDTO(currentAccount.getCustomer()));
+        currentBankAccountDTO.setType(currentAccount.getClass().getSimpleName());
         return currentBankAccountDTO;
     }
 
@@ -52,6 +56,12 @@ public class BankAccountMapperImpl {
         BeanUtils.copyProperties (currentBankAccountDTO, currentAccount);
         currentAccount.setCustomer(fromCustomerDTOToCustomer(currentBankAccountDTO.getCustomerDTO()));
         return currentAccount;
+    }
+
+    public AccountOperetionDTO fromAccountOperation(AccountOperetion accountOperation){
+        AccountOperetionDTO accountOperationDTO=new AccountOperetionDTO();
+        BeanUtils.copyProperties(accountOperation,accountOperationDTO);
+        return accountOperationDTO;
     }
 
 
