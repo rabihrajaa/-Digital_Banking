@@ -28,7 +28,7 @@ public class DigitalBankingBackendApplication {
         SpringApplication.run(DigitalBankingBackendApplication.class, args);
     }
 
-    @Bean
+   // @Bean
     CommandLineRunner commandLineRunner(BankAccountService bankAccountService){
         return args -> {
             Stream.of("Hassan","Imane","Mohamed").forEach(name->{
@@ -46,19 +46,20 @@ public class DigitalBankingBackendApplication {
                     e.printStackTrace();
                 }
             });
-            List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
-            for (BankAccountDTO bankAccount:bankAccounts){
-                for (int i = 0; i <10 ; i++) {
-                    String accountId;
-                    if(bankAccount instanceof SavingBankAccountDTO){
-                        accountId=((SavingBankAccountDTO) bankAccount).getId();
-                    } else{
-                        accountId=((CurrentBankAccountDTO) bankAccount).getId();
-                    }
-                    bankAccountService.credit(accountId,10000+Math.random()*120000,"Credit");
-                    bankAccountService.debit(accountId,1000+Math.random()*9000,"Debit");
-                }
-            }
+
+//            List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
+//            for (BankAccountDTO bankAccount:bankAccounts){
+//                for (int i = 0; i <10 ; i++) {
+//                    String accountId;
+//                    if(bankAccount instanceof SavingBankAccountDTO){
+//                        accountId=((SavingBankAccountDTO) bankAccount).getId();
+//                    } else{
+//                        accountId=((CurrentBankAccountDTO) bankAccount).getId();
+//                    }
+//                    bankAccountService.credit(accountId,10000+Math.random()*120000,"Credit");
+//                    bankAccountService.debit(accountId,1000+Math.random()*9000,"Debit");
+//                }
+//            }
         };
     }
 

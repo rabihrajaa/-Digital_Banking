@@ -34,8 +34,11 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
         log.info("Saving new customer");
+        log.info("customerDTO reçu: {}", customerDTO);
         Customer customer=bankAccountMapper.fromCustomerDTOToCustomer(customerDTO);
+        log.info("customer: {}", customer);
         Customer savedCustomer = customerRepository.save(customer);
+        log.info("customerDTO : {}", bankAccountMapper.fromCustomerToCustomerDTO(savedCustomer));
         return bankAccountMapper.fromCustomerToCustomerDTO(savedCustomer);
     }
 
@@ -136,10 +139,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     public List<BankAccount> bankAccountList(){
         return (List<BankAccount>) bankAccountRepository.findAll();
     }
+
     @Override
     public CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException {
+        log.info("customer: {}", customerId);
         Customer customer=customerRepository.findById(customerId)
                 .orElseThrow(()->new CustomerNotFoundException("Customer not found"));
+            log.info("customer: {}", customer);
+        log.info("customerDTO: {}", bankAccountMapper.fromCustomerToCustomerDTO(customer));
         return bankAccountMapper.fromCustomerToCustomerDTO(customer);
     }
 
