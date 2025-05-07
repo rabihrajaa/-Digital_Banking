@@ -12,7 +12,7 @@ import org.sid.digitalbanking_backend.exceptions.CustomerNotFoundException;
 import java.util.List;
 
 public interface BankAccountService {
-    public Customer saveCustomer(Customer customer);
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
@@ -22,4 +22,6 @@ public interface BankAccountService {
     void transfer(String fromAccountId, String accountIdSource,String accountIdDescription, double amount) throws BankAccountNotFoundException, BankAccountNotSufficientException;
 
     List<BankAccount> bankAccountList();
+
+    CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 }
