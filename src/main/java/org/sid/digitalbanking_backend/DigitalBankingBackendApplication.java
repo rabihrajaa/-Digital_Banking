@@ -100,7 +100,7 @@ public class DigitalBankingBackendApplication {
 
                 for (int i=0;i<10;i++){
                     AccountOperetion accountOperation = new AccountOperetion();
-                    accountOperation.setOpeartionDate (new Date());
+                    accountOperation.setOperationDate (new Date());
                     accountOperation.setAmount (Math.random()*12000);
                     accountOperation.setType(Math.random()>0.5? OperationType.DEBIT: OperationType.CREDIT);
                     accountOperation.setBankAccount (acc);

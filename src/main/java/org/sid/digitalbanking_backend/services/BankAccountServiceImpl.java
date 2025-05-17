@@ -117,7 +117,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         accountOperetion.setType(OperationType.DEBIT);
         accountOperetion.setAmount(amount);
         accountOperetion.setDescription(description);
-        accountOperetion.setOpeartionDate(new Date());
+        accountOperetion.setOperationDate(new Date());
         accountOperetion.setBankAccount(bankAccount);
         accountOperationRepository.save(accountOperetion);
         bankAccount.setBalance(bankAccount.getBalance() - amount);
@@ -131,7 +131,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         accountOperetion.setType(OperationType.CREDIT);
         accountOperetion.setAmount(amount);
         accountOperetion.setDescription(description);
-        accountOperetion.setOpeartionDate(new Date());
+        accountOperetion.setOperationDate(new Date());
         accountOperetion.setBankAccount(bankAccount);
         accountOperationRepository.save(accountOperetion);
         bankAccount.setBalance(bankAccount.getBalance() + amount);
@@ -204,6 +204,13 @@ public class BankAccountServiceImpl implements BankAccountService {
         accountHistoryDTO.setPageSize(size);
         accountHistoryDTO.setTotalPages(accountOperations.getTotalPages());
         return accountHistoryDTO;
+    }
+
+    @Override
+    public List<CustomerDTO> searchCutomers(String keyword) {
+        List<Customer> customers = customerRepository.findByNameContains(keyword);
+        List<CustomerDTO> cutomerDto= customers.stream().map(cust->bankAccountMapper.fromCustomerToCustomerDTO(cust)).collect(Collectors.toList());
+        return cutomerDto;
     }
 
 }

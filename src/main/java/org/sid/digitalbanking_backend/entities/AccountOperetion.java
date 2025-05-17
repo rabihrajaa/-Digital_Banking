@@ -14,7 +14,7 @@ import java.util.Date;
 public class AccountOperetion {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date opeartionDate;
+    private Date operationDate;
     private double amount;
     @Enumerated(EnumType.STRING)
     private OperationType type;

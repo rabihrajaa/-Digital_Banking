@@ -1,19 +1,16 @@
 package org.sid.digitalbanking_backend.web;
 
 import lombok.AllArgsConstructor;
-import org.sid.digitalbanking_backend.dtos.AccountHistoryDTO;
-import org.sid.digitalbanking_backend.dtos.AccountOperetionDTO;
-import org.sid.digitalbanking_backend.dtos.BankAccountDTO;
+import org.sid.digitalbanking_backend.dtos.*;
 import org.sid.digitalbanking_backend.exceptions.BankAccountNotFoundException;
+import org.sid.digitalbanking_backend.exceptions.BankAccountNotSufficientException;
 import org.sid.digitalbanking_backend.services.BankAccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController @AllArgsConstructor
+@CrossOrigin("*")
 public class BankAccountRestController {
     private BankAccountService bankAccountService;
 
@@ -37,6 +34,24 @@ public class BankAccountRestController {
             @RequestParam(name="page",defaultValue = "0") int page,
             @RequestParam(name="size",defaultValue = "5")int size) throws BankAccountNotFoundException {
         return bankAccountService.getAccountHistory(accountId,page,size);
+    }
+
+    @PostMapping("/accounts/debit")
+    public DebitDTO debit(@RequestBody DebitDTO debitDTO) throws BankAccountNotFoundException, BankAccountNotSufficientException {
+        this.bankAccountService.debit(String.valueOf(debitDTO.getAccountId()),debitDTO.getAmount(),debitDTO.getDescription());
+        return debitDTO;
+    }
+
+    @PostMapping("/accounts/credit")
+    public CreditDTO credit(@RequestBody CreditDTO creditDTO) throws BankAccountNotFoundException {
+        this.bankAccountService.credit(String.valueOf(creditDTO.getAccountId()),creditDTO.getAmount(),creditDTO.getDescription());
+        return creditDTO;
+    }
+
+    @PostMapping("/accounts/transfer")
+    public void transfer(@RequestBody TransferRequestDTO transferRequestDTO) {
+        this.bankAccountService.credit(String.valueOf(creditDTO.getAccountId()),creditDTO.getAmount(),creditDTO.getDescription());
+        return creditDTO;
     }
 
 

@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 public class AccountOperetionDTO {
     private Long id;
-    private Date opeartionDate;
+    private Date operationDate;
     private double amount;
     private OperationType type;
     private String description;

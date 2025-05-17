@@ -32,4 +32,6 @@ public interface BankAccountService {
     List<AccountOperetionDTO> accountHistory(String accountId);
 
     AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
+
+    List<CustomerDTO> searchCutomers(String keyword);
 }
