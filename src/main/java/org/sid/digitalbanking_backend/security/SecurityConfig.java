@@ -54,6 +54,7 @@ public class SecurityConfig {
         return httpSecurity
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(ar->ar.requestMatchers("/auth/login/**").permitAll())
                 .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
                 //.httpBasic(Customizer.withDefaults()) // désactivé car JWT utilisé
                 .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
