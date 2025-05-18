@@ -5,13 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.Authenticator;
-
 @RestController
 @RequestMapping("/auth")
-public class securityController {
+public class SecurityController {
+
     @GetMapping("/profile")
-    public Authentication authentication(Authentication authentication) {
+    public Authentication getAuthentication(Authentication authentication) {
         return authentication;
     }
 
