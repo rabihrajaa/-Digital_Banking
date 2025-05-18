@@ -15,16 +15,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return new InMemoryUserDetailsManager(
-                User.withUsername("user1").password(encoder.encode("12345")).roles("USER").build(),
-                User.withUsername("admin").password(encoder.encode("12345")).roles("USER","ADMIN").build()
-        );
-    }
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager(PasswordEncoder encoder) {
+        return new InMemoryUserDetailsManager(
+                User.withUsername("user1").password(encoder.encode("12345")).roles("USER").build(),
+                User.withUsername("admin").password(encoder.encode("12345")).roles("USER", "ADMIN").build()
+        );
     }
 
     @Bean
@@ -36,5 +38,4 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
-
 }
